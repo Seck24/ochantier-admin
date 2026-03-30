@@ -38,24 +38,50 @@ export default function Login() {
     }
   }
 
+  const inputStyle = {
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    color: 'white',
+    borderRadius: '14px',
+    padding: '14px 16px',
+    fontSize: '14px',
+    width: '100%',
+  }
+
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center px-6">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0a1628' }}>
+
+      {/* Background glows */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,40,200,0.06) 0%, transparent 70%)' }} />
+      </div>
+
+      <div className="w-full max-w-sm relative z-10">
+        {/* Logo */}
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-black text-xl">Ô</span>
+          <div
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+            style={{
+              background: 'rgba(59,130,246,0.12)',
+              border: '1px solid rgba(59,130,246,0.35)',
+              boxShadow: '0 0 30px rgba(59,130,246,0.15)',
+            }}
+          >
+            <span className="font-black text-2xl" style={{ color: '#60a5fa' }}>Ô</span>
           </div>
           <h1 className="text-white font-bold text-xl">Ochantier Admin</h1>
-          <p className="text-slate-400 text-sm mt-1">Accès réservé</p>
+          <p className="text-white/40 text-sm mt-1">Accès réservé</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        {/* Form */}
+        <form onSubmit={handleLogin} className="space-y-3">
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Email admin"
-            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm"
+            style={inputStyle}
             required
           />
           <div className="relative">
@@ -64,17 +90,35 @@ export default function Login() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Mot de passe"
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 pr-12 text-white placeholder-slate-500 text-sm"
+              style={{ ...inputStyle, paddingRight: '48px' }}
               required
             />
-            <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
+            <button
+              type="button"
+              onClick={() => setShowPwd(!showPwd)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40"
+            >
               {showPwd ? '🙈' : '👁️'}
             </button>
           </div>
 
-          {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+          {error && (
+            <div className="rounded-xl px-4 py-3 text-sm text-center" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+              {error}
+            </div>
+          )}
 
-          <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-colors disabled:opacity-60">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full font-bold py-4 rounded-2xl text-sm transition-all disabled:opacity-60 mt-2"
+            style={{
+              background: loading ? 'rgba(59,130,246,0.1)' : 'rgba(59,130,246,0.2)',
+              border: '1px solid rgba(59,130,246,0.5)',
+              color: '#60a5fa',
+              boxShadow: loading ? 'none' : '0 0 20px rgba(59,130,246,0.1)',
+            }}
+          >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
